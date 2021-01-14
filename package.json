@@ -1,0 +1,24 @@
+{
+  "name": "bootcamp-tutor",
+  "version": "1.0.0",
+  "description": "A central dashboard for working as a Bootcamp Tutor",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewjknapp/bootcamp-tutor.git"
+  },
+  "author": "andrewjknapp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewjknapp/bootcamp-tutor/issues"
+  },
+  "homepage": "https://github.com/andrewjknapp/bootcamp-tutor#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
+}
