@@ -1,7 +1,10 @@
 const express = require('express')
 const path = require('path')
+const dbInitialization = require('./initialization')
 
 const apiRoutes = require(path.join(__dirname, 'routes', 'apiRoutes.js'));
+
+dbInitialization()
 
 const app = express()
 const PORT = process.env.PORT || 3000

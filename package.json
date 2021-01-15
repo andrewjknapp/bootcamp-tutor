@@ -17,5 +17,7 @@
     "url": "https://github.com/andrewjknapp/bootcamp-tutor/issues"
   },
   "homepage": "https://github.com/andrewjknapp/bootcamp-tutor#readme",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
