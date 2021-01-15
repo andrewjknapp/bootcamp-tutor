@@ -5,6 +5,7 @@ const {
     addStudent,
     updateStudent,
     deleteStudent,
+    getStudentById,
 } = require('../controllers/student-controller')
 
 router
@@ -14,4 +15,7 @@ router
         .put(updateStudent)
         .delete(deleteStudent)
 
+router
+    .route('/students/:id')
+        .get(getStudentById)
 module.exports = router

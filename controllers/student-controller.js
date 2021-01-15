@@ -56,6 +56,15 @@ const controls = {
 
         studentListInstance.removeStudent(studentIndex)
         res.sendStatus(200)
+    },
+    getStudentById({params}, res) {
+        const studentIndex = findIndexOfArrayById(params.id, studentListInstance.getStudentList())
+
+        if (studentIndex === -1) {
+            res.status(404)
+        }
+
+        res.json(studentListInstance.getStudentList()[studentIndex])
     }
 }
 module.exports = controls

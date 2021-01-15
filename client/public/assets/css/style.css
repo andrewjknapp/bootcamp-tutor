@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+}
+
+.add-student-form {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-label-group,
+.form-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label-group {
+    width: 100px
+}
+
+.form-label {
+    display: block
+}
+
+#screen-popup-blur {
+    background-color: rgba(100, 100, 100, 0.4);
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    right: 0;
+}
+
+#session-popup {
+    background-color: bisque;
+    width: 90vw;
+    height: 90vh;
+    position: absolute;
+    right: 5vw;
+    top: 5vh;
+    padding: 5vw;
+}
+
+#exit-icon {
+    position: absolute;
+    right: 5vw;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.session-inputs {
+    display: block;
+}
+
+#generated-text {
+    width: 80vw;
+    height: 60vw;
+    resize: none;
+}
+
+.hide {
+    display: none;
+}
