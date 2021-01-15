@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 
-const apiRoutes = require("./routes/apiRoutes");
+const apiRoutes = require(path.join(__dirname, 'routes', 'apiRoutes.js'));
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", apiRoutes);
 
 app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+    res.sendFile(path.join(__dirname, '..', 'front-end', 'views', 'index.html'));
   });
 
 app.listen(PORT, function() {
