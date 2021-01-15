@@ -2,18 +2,16 @@ const router = require('express').Router()
 
 const {
     getAllStudents,
-    addStudent
+    addStudent,
+    updateStudent,
+    deleteStudent,
 } = require('../controllers/student-controller')
 
 router
     .route('/students')
         .get(getAllStudents)
         .post(addStudent)
-
-router
-    .route('/students/:id')
-        .get()
-        .put()
-        .delete()
+        .put(updateStudent)
+        .delete(deleteStudent)
 
 module.exports = router

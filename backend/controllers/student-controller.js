@@ -1,13 +1,15 @@
 const path = require('path')
 const {readFileSync, writeFileSync, write} = require('fs')
 const db = path.join(__dirname, '..', 'db', 'db.json')
-const {Student} = require(path.join(__dirname, '..', 'lib'))
+const {Student, StudentList} = require(path.join(__dirname, '..', 'lib'))
+const {findIndexOfArrayById} = require(path.join(__dirname, '..', 'utils', 'utils.js'))
+
+const studentListInstance = new StudentList()
 
 const controls = {
     getAllStudents(req, res) {
         try {
-            const allStudents = JSON.parse(readFileSync(db))
-            console.log(allStudents)
+            const allStudents = studentListInstance.getStudentList()
             res.json(allStudents)
         }
         catch (err) {
@@ -17,21 +19,43 @@ const controls = {
     addStudent({body}, res) {
         const {id, graduation_date, first_name, last_name, email, timezone, zoom_link} = body
         const student = new Student(id, graduation_date, first_name, last_name, email, timezone, zoom_link)
-        console.log(student.id)
 
         try {
-            const allStudents = JSON.parse(readFileSync(db))
-
+            const allStudents = studentListInstance.getStudentList()
             allStudents.push(student)
-
-            writeFileSync(db, JSON.stringify(allStudents, " ", 4))
-
+            studentListInstance.writeStudentData()
+            console.log("Saved new student:", student.first_name, student.last_name)
             res.json(student)
         }
         catch (err) {
             console.error(err)
             res.sendStatus(500)
         }
+    }, 
+    updateStudent({body}, res) {
+        const studentId = body.id
+        const studentIndex = findIndexOfArrayById(studentId, studentListInstance.getStudentList())
+
+        try {
+            studentListInstance.updateStudent(studentIndex, body.data)
+            res.sendStatus(200)
+        }
+        catch(err) {
+            console.error(err)
+            res.sendStatus(500)
+        }
+        
+    },
+    deleteStudent({body}, res) {
+
+        const studentIndex = findIndexOfArrayById(body.id, studentListInstance.getStudentList())
+
+        if (studentIndex === -1) {
+            res.status(404)
+        }
+
+        studentListInstance.removeStudent(studentIndex)
+        res.sendStatus(200)
     }
 }
 module.exports = controls

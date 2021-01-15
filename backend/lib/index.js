@@ -1,3 +1,4 @@
 const Student = require('./Student')
+const StudentList = require('./StudentList')
 
-module.exports = {Student}
+module.exports = {Student, StudentList}
