@@ -4,10 +4,8 @@ $(document).ready(() => {
 
 const EMAIL_DATE_FORMAT = 'dddd / MMM D / h:mm A';
 const GOOGLE_SHEETS_DATE_FORMAT = 'MMM D yyyy, h:mm A';
-
-const ADP_TEMPLATE = '../assets/templates/adp.txt';
-const CONFIRMATION_EMAIL_TEMPLATE = '../assets/templates/confirmation_email.txt';
-const GOOGLE_SHEETS_ENTRY_TEMPLATE = '../assets/tempates/google_sheets_entry.txt';
+const DATE_INPUT_FORMAT = 'M/D/YYYY';
+const TIME_INPUT_FORMAT = 'h:mm A';
 
 const state = {
     selectedStudent: null,
@@ -15,6 +13,8 @@ const state = {
     adp_txt: null,
     google_sheets_entry: null,
     B2B: null,
+    sessionDate: moment(),
+    sessionTime: moment().hour(12).minutes(0)
 }
 
 function displayAllStudents() {
@@ -27,7 +27,7 @@ function displayAllStudents() {
     .then(studentData => {
         for(const student of studentData) {
             allStudentsDIV.append($(`
-                <p id="${student.id}">${student.first_name} ${student.last_name}</p>
+                <p id="${student.id}" class="student-name">${student.first_name} ${student.last_name}</p>
             `))
         }
     })
@@ -36,6 +36,8 @@ function displayAllStudents() {
 function showPopup() {
     $('#screen-popup-blur').removeClass('hide')
     $('#date-entry').removeClass('hide')
+    $('#session-date').val(state.sessionDate.format(DATE_INPUT_FORMAT))
+    $('#session-time').val(state.sessionTime.format(TIME_INPUT_FORMAT))
 }
 
 function hidePopup() {
@@ -53,7 +55,6 @@ $('#student-names-list').on('click', 'p', function() {
     })
     .then(response => {
         state.selectedStudent = response
-        console.log(state)
     })
     showPopup()
 })
@@ -120,4 +121,30 @@ $('#generated-results').on('click', 'button', function() {
         default:
             textareaEl.val('');
     }
+})
+
+$('#session-date').on('keydown', function(event) {
+    switch(event.key) {
+        case 'ArrowUp': 
+            state.sessionDate.add(1, 'days');
+            break;
+        case 'ArrowDown':
+            state.sessionDate.subtract(1, 'days');
+            break;
+    }
+    
+    $('#session-date').val(state.sessionDate.format(DATE_INPUT_FORMAT));
+})
+
+$('#session-time').on('keydown', function(event) {
+    switch(event.key) {
+        case 'ArrowUp': 
+            state.sessionTime.add(30, 'minutes');
+            break;
+        case 'ArrowDown':
+            state.sessionTime.subtract(30, 'minutes');
+            break;
+    }
+    
+    $('#session-time').val(state.sessionTime.format(TIME_INPUT_FORMAT));
 })
