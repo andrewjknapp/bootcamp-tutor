@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+#google-sheets-student-roster-entry {
+    
+}
+
 .add-student-form {
     display: flex;
     flex-direction: row;
@@ -55,10 +59,17 @@
     display: block;
 }
 
-#generated-text {
+#generated-text,
+#generated-html {
     width: 80vw;
-    height: 60vw;
+    height: 65vh;
     resize: none;
+    background: white;
+    padding: 10px;
+}
+
+#generated-html {
+    overflow: scroll;
 }
 
 .hide {

@@ -7,6 +7,8 @@ const GOOGLE_SHEETS_DATE_FORMAT = 'MMM D yyyy, h:mm A';
 const DATE_INPUT_FORMAT = 'M/D/YYYY';
 const TIME_INPUT_FORMAT = 'h:mm A';
 
+var generatedHTMLRange = document.createRange();
+
 const state = {
     selectedStudent: null,
     confirmation_email_txt: null,
@@ -70,6 +72,7 @@ $('#session-time-btn').on('click', function() {
     const timezone = state.selectedStudent.timezone
 
     const sessionDate = moment(date + " " + time + " " + timezone)
+
     const studentName = state.selectedStudent.first_name + " " + state.selectedStudent.last_name;
 
     // ADP
@@ -78,7 +81,7 @@ $('#session-time-btn').on('click', function() {
     adp_text = adp_text.replace('%', studentName)
     adp_text = adp_text.replace('%', state.B2B)
     state.adp_txt = adp_text;
-
+    
     // Google Sheets Entry
     const gs_time = sessionDate.format(GOOGLE_SHEETS_DATE_FORMAT);    
     let gs_entry = templates.google_sheets_entry;
@@ -93,6 +96,7 @@ $('#session-time-btn').on('click', function() {
     // Confirmation Email
     const email_time = sessionDate.format(EMAIL_DATE_FORMAT)
     let email_txt = templates.confirmation_email;
+    email_txt = email_txt.replace('%', state.selectedStudent.email);
     email_txt = email_txt.replace('%', email_time)
     email_txt = email_txt.replace('%', state.selectedStudent.first_name)
     email_txt = email_txt.replace('%', email_time)
@@ -107,15 +111,23 @@ $('#session-time-btn').on('click', function() {
 $('#generated-results').on('click', 'button', function() {
     const buttonText = $(this).attr('id')
     const textareaEl = $('#generated-text');
+    const htmlareaEl = $('#generated-html');
     console.log(state)
     switch (buttonText) {
         case 'confirmation-email':
-            textareaEl.val(state.email_txt);
+            textareaEl.addClass('hide');
+            htmlareaEl.removeClass('hide');
+            htmlareaEl.empty();
+            htmlareaEl.append($(state.email_txt));
             break;
         case 'adp-text':
+            textareaEl.removeClass('hide');
+            htmlareaEl.addClass('hide');
             textareaEl.val(state.adp_txt);
             break;
         case 'google-sheets-entry':
+            textareaEl.removeClass('hide');
+            htmlareaEl.addClass('hide');
             textareaEl.val(state.google_sheets_entry);
             break;
         default:

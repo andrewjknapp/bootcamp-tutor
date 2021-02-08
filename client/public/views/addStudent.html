@@ -13,27 +13,35 @@
     </nav>
     <h1>Add Student</h1>
 
-    <section class="add-student-form">
+    <section>
 
-        <div class="form-label-group">
-            <label class="form-label">First Name</label>
-            <label class="form-label">Last Name</label>
-            <label class="form-label">Student ID</label>
-            <label class="form-label">Graduation Date</label>
-            <label class="form-label">Time Zone</label>
-            <label class="form-label">Email</label>
-            <label class="form-label">Zoom Link</label>
-        </div>
+        <p>Paste from Google Sheets Student Roster</p>
+        <input id="google-sheets-student-roster-entry" type="text" onpaste="gsEntryOnPaste()"></input>
 
-        <div class="form-input-group">
-            <input id="form-first-name">
-            <input id="form-last-name">
-            <input id="form-id">
-            <input id="form-graduation">
-            <input id="form-time-zone">
-            <input id="form-email">
-            <input id="form-zoom-link">
-        </div>
+        <p>or</p>
+        <p>Enter Student Information</p>
+
+        <section class="add-student-form">
+            <div class="form-label-group">
+                <label class="form-label">First Name</label>
+                <label class="form-label">Last Name</label>
+                <label class="form-label">Student ID</label>
+                <label class="form-label">Graduation Date</label>
+                <label class="form-label">Time Zone</label>
+                <label class="form-label">Email</label>
+                <label class="form-label">Zoom Link</label>
+            </div>
+    
+            <div class="form-input-group">
+                <input id="form-first-name">
+                <input id="form-last-name">
+                <input id="form-id">
+                <input id="form-graduation">
+                <input id="form-time-zone">
+                <input id="form-email">
+                <input id="form-zoom-link">
+            </div>
+        </section>
 
     </section>
     <button id="add-student-button" type="button">Add Student</button>

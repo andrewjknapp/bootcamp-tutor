@@ -1,3 +1,4 @@
+const gs_entry = $('#google-sheets-student-roster-entry')
 const firstNameEl = $('#form-first-name')
 const lastNameEl = $('#form-last-name')
 const idEl = $('#form-id')
@@ -34,3 +35,29 @@ $('#add-student-button').on('click', () => {
         console.log(response)
     })
 })
+
+gs_entry.change(function() {
+    const input = $(this).val()
+    autoFillForm(input)
+})
+
+function gsEntryOnPaste() {
+    setTimeout(() => {
+        autoFillForm(gs_entry.val())
+    }, 1)
+}
+
+function autoFillForm(text) {
+    
+    const input = text.split("\t");
+    console.log(input);
+    const name = input[2].split(" ");
+    firstNameEl.val(name[0]);
+    lastNameEl.val(name[1]);
+
+    idEl.val(input[0]);
+    graduationEl.val(input[1]);
+    timeZoneEl.val(input[5]);
+    emailEl.val(input[3]);
+    zoomLinkEl.val(input[6]);
+}
