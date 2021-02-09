@@ -1,5 +1,5 @@
 $(document).ready(() => {
-    displayAllStudents()
+    initializePage()
 })
 
 const EMAIL_DATE_FORMAT = 'dddd / MMM D / h:mm A';
@@ -9,6 +9,9 @@ const TIME_INPUT_FORMAT = 'h:mm A';
 
 var generatedHTMLRange = document.createRange();
 
+const filter = {
+    student: ''
+}
 const state = {
     selectedStudent: null,
     confirmation_email_txt: null,
@@ -16,23 +19,46 @@ const state = {
     google_sheets_entry: null,
     B2B: null,
     sessionDate: moment(),
-    sessionTime: moment().hour(12).minutes(0)
+    sessionTime: moment().hour(12).minutes(0),
+    allStudents: []
 }
 
-function displayAllStudents() {
-    const allStudentsDIV = $('#student-names-list')
-
-    $.ajax({
-        url: '/api/students',
-        method: 'GET'
+function initializePage() {
+    getAllStudents()
+    .then(() => {
+        displayStudents();
     })
-    .then(studentData => {
-        for(const student of studentData) {
+}
+
+function getAllStudents() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/api/students',
+            method: 'GET'
+        })
+        .then(studentData => {
+            state.allStudents = studentData;
+            resolve();
+            console.log(state);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
+function displayStudents() {
+    const allStudentsDIV = $('#student-names-list')
+    allStudentsDIV.empty();
+    for(const student of state.allStudents) {
+        if (filter.student == '' || 
+            student.first_name.includes(filter.student) ||
+            student.last_name.includes(filter.student)) {
             allStudentsDIV.append($(`
                 <p id="${student.id}" class="student-name">${student.first_name} ${student.last_name}</p>
             `))
         }
-    })
+    }
 }
 
 function showPopup() {
@@ -101,6 +127,7 @@ $('#session-time-btn').on('click', function() {
     email_txt = email_txt.replace('%', state.selectedStudent.first_name)
     email_txt = email_txt.replace('%', email_time)
     email_txt = email_txt.replace('%', state.selectedStudent.zoom_link)
+    email_txt = email_txt.replace('%', state.selectedStudent.zoom_link)
     state.email_txt = email_txt;
 
     $('#date-entry').addClass('hide')
@@ -159,4 +186,9 @@ $('#session-time').on('keydown', function(event) {
     }
     
     $('#session-time').val(state.sessionTime.format(TIME_INPUT_FORMAT));
+})
+
+$('#student-filter').on('keyup', function(event) {
+    filter.student = $(this).val();
+    displayStudents();
 })

@@ -9,7 +9,7 @@ Thank you for scheduling your session with me. I am looking forward to our sessi
 <br>
 If something comes up and the scheduled time will not work, <strong>let me know a minimum of 6 hours before the appointment time</strong> and we’ll figure something out.<br>
 <br>    
-This session will take place <a href="%">here</a><br>
+This session will take place <a href="%">here</a> (%)<br>
 <br> 
 (If you have not used zoom before please join the meeting at least 15 minutes early because it may have you download and install some software.)<br>
 <br> 
