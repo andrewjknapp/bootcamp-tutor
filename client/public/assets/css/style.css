@@ -63,6 +63,16 @@
     padding: 5vw;
 }
 
+#session-planner {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+#session-planner section {
+    width: 200px;
+}
+
 #exit-icon {
     position: absolute;
     right: 5vw;

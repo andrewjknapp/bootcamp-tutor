@@ -39,7 +39,6 @@ function getAllStudents() {
         .then(studentData => {
             state.allStudents = studentData;
             resolve();
-            console.log(state);
         })
         .catch(err => {
             reject(err);
@@ -157,14 +156,28 @@ $('#session-time-btn').on('click', function() {
 
     $('#date-entry').addClass('hide')
     $('#generated-results').removeClass('hide')
-    
+
+    $.ajax({
+        url: '/api/students',
+        method: 'PUT',
+        data: {
+            ...state.selectedStudent,
+            lastSession: {
+                sessionDate: sessionDate.format(GOOGLE_SHEETS_DATE_FORMAT)
+            }
+        }
+    })
+    .then(studentData => {
+        // console.log(studentData)
+        // console.log(state)
+    })
 })
 
 $('#generated-results').on('click', 'button', function() {
     const buttonText = $(this).attr('id')
     const textareaEl = $('#generated-text');
     const htmlareaEl = $('#generated-html');
-    console.log(state)
+    
     switch (buttonText) {
         case 'confirmation-email':
             textareaEl.addClass('hide');

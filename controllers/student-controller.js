@@ -33,11 +33,12 @@ const controls = {
         }
     }, 
     updateStudent({body}, res) {
+        console.log(body);
         const studentId = body.id
         const studentIndex = findIndexOfArrayById(studentId, studentListInstance.getStudentList())
-
+        console.log(studentIndex)
         try {
-            studentListInstance.updateStudent(studentIndex, body.data)
+            studentListInstance.updateStudent(studentIndex, body)
             res.sendStatus(200)
         }
         catch(err) {
