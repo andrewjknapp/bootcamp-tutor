@@ -17,6 +17,8 @@ const state = {
     confirmation_email_txt: null,
     adp_txt: null,
     google_sheets_entry: null,
+    google_sheets_finish: null,
+    google_forms_eval: null,
     B2B: null,
     sessionDate: moment(),
     sessionTime: moment().hour(12).minutes(0),
@@ -64,6 +66,12 @@ function showPopupSessionPlanner() {
     $('#screen-popup-blur').removeClass('hide')
     $('#date-entry').removeClass('hide')
     $('#session-planner').removeClass('hide')
+
+    if (state.selectedStudent.upcomingSession.sessionDate != '') {
+        $('#finish-session').removeClass('hide');
+        $('#upcoming-date').text(state.selectedStudent.upcomingSession.sessionDate)
+    }
+
     $('#session-date').val(state.sessionDate.format(DATE_INPUT_FORMAT))
     $('#session-time').val(state.sessionTime.format(TIME_INPUT_FORMAT))
 }
@@ -90,8 +98,10 @@ function hidePopup(event) {
     $('#screen-popup-blur').addClass('hide')
     $('#date-entry').addClass('hide')
     $('#session-planner').addClass('hide')
+    $('#finish-session').addClass('hide');
     $('#generated-results').addClass('hide')
     $('#weekly-email-popup').addClass('hide')
+    $('#generated-session-finish').addClass('hide');
 
     state.selectedStudent = null
 }
@@ -104,8 +114,8 @@ $('#student-names-list').on('click', 'p', function() {
     })
     .then(response => {
         state.selectedStudent = response
+        showPopupSessionPlanner()
     })
-    showPopupSessionPlanner()
 })
 
 $('#weekly-email').on('click', showPopupWeeklyEmail)
@@ -155,6 +165,7 @@ $('#session-time-btn').on('click', function() {
     state.email_txt = email_txt;
 
     $('#date-entry').addClass('hide')
+    $('#finish-session').addClass('hide')
     $('#generated-results').removeClass('hide')
 
     $.ajax({
@@ -163,13 +174,72 @@ $('#session-time-btn').on('click', function() {
         data: {
             ...state.selectedStudent,
             upcomingSession: {
-                sessionDate: sessionDate.format(GOOGLE_SHEETS_DATE_FORMAT)
+                sessionDate: sessionDate.format(GOOGLE_SHEETS_DATE_FORMAT),
+                isB2B: isB2B
             }
         }
     })
     .then(studentData => {
         // console.log(studentData)
         // console.log(state)
+    })
+})
+
+$('#finish-session-btn').on('click', function() {
+    const sessionDate = moment(state.selectedStudent.upcomingSession.sessionDate);
+    const isB2B = state.selectedStudent.upcomingSession.isB2B;
+
+    const adpB2Btext = isB2B ? 'B2B-yes' : 'B2B-no'
+    const gsB2Btext = isB2B ? 'Y' : 'N'
+
+    const studentName = state.selectedStudent.first_name + " " + state.selectedStudent.last_name;
+
+    // ADP
+    let adp_text = templates.adp;
+    adp_text = adp_text.replace('%', state.selectedStudent.id)
+    adp_text = adp_text.replace('%', studentName)
+    adp_text = adp_text.replace('%', state.B2B)
+    state.adp_txt = adp_text;
+
+    // Google Sheets Finish
+    let gs_finish_text = templates.google_sheets_finish
+    gs_finish_text = gs_finish_text.replace('%', sessionDate.format('H:mm A'))
+    sessionDate.add(1, 'hours')
+    gs_finish_text = gs_finish_text.replace('%', sessionDate.format('H:mm A'))
+    sessionDate.subtract(1, 'hours')
+    gs_finish_text = gs_finish_text.replace('%', gsB2Btext)
+    gs_finish_text = gs_finish_text.replace('%', 'Y')
+    gs_finish_text = gs_finish_text.replace('%', 'Show') // TODO Ask if no show
+    gs_finish_text = gs_finish_text.replace('%', '')     // TODO Ask for topic
+    gs_finish_text = gs_finish_text.replace('%', '')     // TODO Ask for notes
+    gs_finish_text = gs_finish_text.replace('%', 'Y')
+    state.google_sheets_finish = gs_finish_text
+
+    $('#date-entry').addClass('hide')
+    $('#finish-session').addClass('hide')
+    $('#generated-session-finish').removeClass('hide');
+})
+
+$('#session-complete').on('click', function() {
+    console.log({
+        ...state.selectedStudent,
+        upcomingSession: {
+            sessionDate: '',
+            isB2B: false
+        }
+    })
+    $.ajax({
+        url: '/api/students',
+        method: 'PUT',
+        data: {
+            ...state.selectedStudent,
+            upcomingSession: {
+                sessionDate: '',
+                isB2B: false
+            }
+        }
+    }).then(() => {
+        console.log('Marked session as complete')
     })
 })
 
@@ -197,6 +267,24 @@ $('#generated-results').on('click', 'button', function() {
             break;
         default:
             textareaEl.val('');
+    }
+})
+
+$('#generated-session-finish').on('click', 'button', function() {
+    const buttonText = $(this).attr('id')
+    const textAreaEl = $('#generated-finish')
+
+    switch (buttonText) {
+        case 'adp-text':
+            textAreaEl.val(state.adp_txt);
+            break;
+        case 'google-sheets-finish':
+            textAreaEl.val(state.google_sheets_finish)
+            break;
+        case 'google-forms-finish':
+            textAreaEl.val("google forms")
+            break;
+        
     }
 })
 

@@ -69,5 +69,6 @@ Andrew Knapp<br>
     
     
     </div>
-    `
+    `,
+    google_sheets_finish: `%	%	%	%	%		%	%	%`,
 }

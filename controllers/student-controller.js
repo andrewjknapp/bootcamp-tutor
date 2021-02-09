@@ -39,7 +39,7 @@ const controls = {
         console.log(studentIndex)
         try {
             studentListInstance.updateStudent(studentIndex, body)
-            res.sendStatus(200)
+            res.json(body)
         }
         catch(err) {
             console.error(err)

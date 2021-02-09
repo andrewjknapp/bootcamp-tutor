@@ -23,13 +23,16 @@
             <button id="weekly-email">Weekly Email</button>
         </section>
     </article>
+    <!-- POPUP -->
     <section id="screen-popup-blur" class="hide">
         <div id="session-popup">
             <p id="exit-icon">exit</p>
+            <!-- SESSION PLANNER POPUP -->
             <article id="session-planner" class="hide">
-                <section>
+                <!-- SESSION PLAN-->
+                <section id="date-entry" class="hide">
                     <h1>Plan Your Session</h1>
-                    <div id="date-entry" class="hide">
+                    <div>
                         <p>Please enter the session date and time of session</p>
                         <input id="session-date" class="session-inputs" placeholder="3/21/2022">
                         <input id="session-time" class="session-inputs" placeholder="4:00 PM">
@@ -39,17 +42,34 @@
                         <button type="button" id="session-time-btn">Plan Session!</button>
                     </div>
                 </section>
-                <section>
-                    <h1>Finish Current Session</h1>
-                </section>
+                <!-- GENERATED PLANNER RESULTS -->
                 <div id="generated-results" class="hide">
+                    <h1>Plan Your Session</h1>
                     <button type="button" id="confirmation-email">Confirmation Email</button>
                     <button type="button" id="adp-text">ADP Notes</button>
                     <button type="button" id="google-sheets-entry">GS Entry</button>
                     <textarea id="generated-text"></textarea>
                     <article contenteditable="true" id="generated-html" tabindex="0" class="hide"></article>
                 </div>
+                
+                <!-- FINISH SESSION -->
+                <section id="finish-session" class="hide">
+                    <h1>Finish Current Session</h1>
+                    <p>Upcomming Session:</p>
+                    <p id="upcoming-date"></p>
+                    <button type="button" id="finish-session-btn">Generate Entries</button>
+                </section>
+                <!-- GENERATED FINISH SESSION RESULTS -->
+                <div id="generated-session-finish" class="hide">
+                    <h1>Finish Current Session</h1>
+                    <button type="button" id="adp-text">ADP Notes</button>
+                    <button type="button" id="google-sheets-finish">GS Entry</button>
+                    <button type="button" id="google-forms-finish">Eval Form</button>
+                    <textarea id="generated-finish"></textarea>
+                    <button id="session-complete">Mark Session as Complete</button>
+                </div>
             </article>
+            <!-- WEEKLY EMAIL POPUP -->
             <article id="weekly-email-popup" class="hide">
                 <h1>Weekly Email</h1>
                 <p>Student Emails</p>

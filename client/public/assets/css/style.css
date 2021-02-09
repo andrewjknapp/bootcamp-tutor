@@ -84,9 +84,15 @@
     display: block;
 }
 
+#generated-results,
+#generated-session-finish {
+    margin-top: 30px;
+}
+
 #generated-text,
 #generated-html,
-#generated-weekly-email {
+#generated-weekly-email,
+#generated-finish {
     width: 80vw;
     resize: none;
     background: white;
@@ -97,6 +103,10 @@
 #generated-text,
 #generated-html {
     height: 65vh;
+}
+
+#generated-finish {
+    height: 50vh;
 }
 
 #weekly-email-student-emails {
