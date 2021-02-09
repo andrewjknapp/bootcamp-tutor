@@ -90,6 +90,7 @@ function showPopupWeeklyEmail() {
 }
 
 function hidePopup(event) {
+    console.log(event.target.id)
     if (event.target.id != 'exit-icon' &&
         event.target.id != 'screen-popup-blur') {
         return

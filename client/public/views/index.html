@@ -26,9 +26,10 @@
     <!-- POPUP -->
     <section id="screen-popup-blur" class="hide">
         <div id="session-popup">
-            <p id="exit-icon">exit</p>
-            <!-- SESSION PLANNER POPUP -->
-            <article id="session-planner" class="hide">
+            <p id="exit-icon">&times;</p>
+            <div id="session-content">
+                <!-- SESSION PLANNER POPUP -->
+                <article id="session-planner" class="hide">
                 <!-- SESSION PLAN-->
                 <section id="date-entry" class="hide">
                     <h1>Plan Your Session</h1>
@@ -68,15 +69,16 @@
                     <textarea id="generated-finish"></textarea>
                     <button id="session-complete">Mark Session as Complete</button>
                 </div>
-            </article>
-            <!-- WEEKLY EMAIL POPUP -->
-            <article id="weekly-email-popup" class="hide">
+                </article>
+                <!-- WEEKLY EMAIL POPUP -->
+                <article id="weekly-email-popup" class="hide">
                 <h1>Weekly Email</h1>
                 <p>Student Emails</p>
                 <input id="weekly-email-student-emails">
                 <p>Email</p>
                 <section contenteditable="true" id="generated-weekly-email" tabindex="0"></section>
-            </article>
+                </article>
+            </div>
         </div>
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
