@@ -2,8 +2,23 @@
     box-sizing: border-box;
 }
 
-#google-sheets-student-roster-entry {
-    
+#heading {
+    text-align: center;
+}
+
+#main-content {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.content-section {
+    width: fit-content;
+    min-width: 260px;
+    height: 300px;
+    padding: 20px;
+    background-color: aquamarine;
+    margin-bottom: 10px;
 }
 
 .add-student-form {
@@ -60,12 +75,26 @@
 }
 
 #generated-text,
-#generated-html {
+#generated-html,
+#generated-weekly-email {
     width: 80vw;
-    height: 65vh;
     resize: none;
     background: white;
     padding: 10px;
+    overflow: scroll;
+}
+
+#generated-text,
+#generated-html {
+    height: 65vh;
+}
+
+#weekly-email-student-emails {
+    width: 80vw;
+}
+
+#generated-weekly-email {
+    height: 55vh;
 }
 
 #generated-html {

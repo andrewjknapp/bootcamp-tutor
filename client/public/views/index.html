@@ -11,35 +11,47 @@
         <a href="/">Dashboard</a>
         <a href="/addStudent">Add Student</a>
     </nav>
-    <h1>Tutoring Dashboard</h1>
-    <section>
-        <h2>All Students</h4>
-        
-        <span>Filter: <input id="student-filter"></span>
-        <div id="student-names-list"></div>
-    </section>
-
+    <h1 id="heading">Tutoring Dashboard</h1>
+    <article id="main-content">
+        <section class="content-section">
+            <h2>All Students</h4>
+            <span>Filter: <input id="student-filter"></span>
+            <div id="student-names-list"></div>
+        </section>
+        <section class="content-section">
+            <h2>Other Actions</h2>
+            <button id="weekly-email">Weekly Email</button>
+        </section>
+    </article>
     <section id="screen-popup-blur" class="hide">
         <div id="session-popup">
             <p id="exit-icon">exit</p>
-            <h1>Plan your session</h1>
-            <div id="date-entry" class="hide">
-                <p>Please enter the session date and time of session</p>
-                <input id="session-date" class="session-inputs" placeholder="3/21/2022">
-                <input id="session-time" class="session-inputs" placeholder="4:00 PM">
-                <label>B2B</label>
-                <input id="back-to-back" type="checkbox">
-                <br>
-                <button type="button" id="session-time-btn">Plan Session!</button>
-            </div>
-            <div id="generated-results" class="hide">
-                <button type="button" id="confirmation-email">Confirmation Email</button>
-                <button type="button" id="adp-text">ADP Notes</button>
-                <button type="button" id="google-sheets-entry">GS Entry</button>
-                <textarea id="generated-text"></textarea>
-                <article contenteditable="true" id="generated-html" tabindex="0" class="hide"></article>
-            </div>
-
+            <article id="session-planner" class="hide">
+                <h1>Plan your session</h1>
+                <div id="date-entry" class="hide">
+                    <p>Please enter the session date and time of session</p>
+                    <input id="session-date" class="session-inputs" placeholder="3/21/2022">
+                    <input id="session-time" class="session-inputs" placeholder="4:00 PM">
+                    <label>B2B</label>
+                    <input id="back-to-back" type="checkbox">
+                    <br>
+                    <button type="button" id="session-time-btn">Plan Session!</button>
+                </div>
+                <div id="generated-results" class="hide">
+                    <button type="button" id="confirmation-email">Confirmation Email</button>
+                    <button type="button" id="adp-text">ADP Notes</button>
+                    <button type="button" id="google-sheets-entry">GS Entry</button>
+                    <textarea id="generated-text"></textarea>
+                    <article contenteditable="true" id="generated-html" tabindex="0" class="hide"></article>
+                </div>
+            </article>
+            <article id="weekly-email-popup" class="hide">
+                <h1>Weekly Email</h1>
+                <p>Student Emails</p>
+                <input id="weekly-email-student-emails">
+                <p>Email</p>
+                <section contenteditable="true" id="generated-weekly-email" tabindex="0"></section>
+            </article>
         </div>
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

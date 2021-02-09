@@ -61,17 +61,39 @@ function displayStudents() {
     }
 }
 
-function showPopup() {
+function showPopupSessionPlanner() {
     $('#screen-popup-blur').removeClass('hide')
     $('#date-entry').removeClass('hide')
+    $('#session-planner').removeClass('hide')
     $('#session-date').val(state.sessionDate.format(DATE_INPUT_FORMAT))
     $('#session-time').val(state.sessionTime.format(TIME_INPUT_FORMAT))
 }
 
-function hidePopup() {
+function showPopupWeeklyEmail() {
+    $('#generated-weekly-email').append($(templates.weekly_email))
+
+    let studentEmails = ''
+    for (const student of state.allStudents) {
+        studentEmails += student.email + '\t';
+    }
+    $('#weekly-email-student-emails').val(studentEmails);
+
+    $('#screen-popup-blur').removeClass('hide')
+    $('#weekly-email-popup').removeClass('hide')
+}
+
+function hidePopup(event) {
+    if (event.target.id != 'exit-icon' &&
+        event.target.id != 'screen-popup-blur') {
+        return
+    }
+
     $('#screen-popup-blur').addClass('hide')
     $('#date-entry').addClass('hide')
+    $('#session-planner').addClass('hide')
     $('#generated-results').addClass('hide')
+    $('#weekly-email-popup').addClass('hide')
+
     state.selectedStudent = null
 }
 
@@ -84,10 +106,13 @@ $('#student-names-list').on('click', 'p', function() {
     .then(response => {
         state.selectedStudent = response
     })
-    showPopup()
+    showPopupSessionPlanner()
 })
 
+$('#weekly-email').on('click', showPopupWeeklyEmail)
 $('#exit-icon').on('click', hidePopup)
+$('#screen-popup-blur').on('click', hidePopup)
+
 $('#session-time-btn').on('click', function() {
     const date = $('#session-date').val()
     const time = $('#session-time').val()
