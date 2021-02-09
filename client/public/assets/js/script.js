@@ -162,7 +162,7 @@ $('#session-time-btn').on('click', function() {
         method: 'PUT',
         data: {
             ...state.selectedStudent,
-            lastSession: {
+            upcomingSession: {
                 sessionDate: sessionDate.format(GOOGLE_SHEETS_DATE_FORMAT)
             }
         }
